@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Jquery modal test</title>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script>
+	    // Begin Affirm JS embed code
+		// =======================
+		_affirm_config = {
+		    script:"https://cdn1-sandbox.affirm.com/js/v2/affirm.js",
+		    public_api_key:"ARQBLCL7NAMBTZ7F"
+		};
+		(function(l,g,m,e,a,f,b){var d,c=l[m]||{},h=document.createElement(f),n=document.getElementsByTagName(f)[0],k=function(a,b,c){return function(){a[b]._.push([c,arguments])}};c[e]=k(c,e,"set");d=c[e];c[a]={};c[a]._=[];d._=[];c[a][b]=k(c,a,b);a=0;for(b="set add save post open empty reset on off trigger ready setProduct".split(" ");a<b.length;a++)d[b[a]]=k(c,e,b[a]);a=0;for(b=["get","token","url","items"];a<b.length;a++)d[b[a]]=function(){};h.async=!0;h.src=g[f];n.parentNode.insertBefore(h,n);delete g[f];d(g);l[m]=c})(window,_affirm_config,"affirm","checkout","ui","script","ready");
+		// =======================
+		// End Affirm JS embed code
+	</script>
+	<style>
+		body {
+			text-align:center;
+			padding-top:40px;
+		}
+		.button {
+			padding:10px;
+			margin:10px;
+			border:1px solid #ddd;
+			border-radius: 2px;
+			cursor: pointer;
+			width:400px;
+			display: inline-block;
+		}
+		#affirm-refresh {
+			cursor: default;
+			color:#ddd;
+		}
+		#affirm-refresh.active {
+			cursor: pointer;
+			color:#000;
+		}
+	</style>
+</head>
+<body>
+	<div class="affirm-as-low-as" data-amount="30000"></div>
+	<br/>
+	<div class='button' id="jQuery-data">jQuery 'data' replace with $500</div>
+	<br/>
+	<div class='button' id="jQuery-attr">jQuery 'attr' replace with $600</div>
+	<br/>
+	<div class='button' id="affirm-refresh">Affirm UI refresh</div>
+	<br/>
+	<div id="console"></div>
+	<script>
+		var b = document.getElementById('jQuery-data');
+		var c = document.getElementById('jQuery-attr');
+		var d = document.getElementById('affirm-refresh');
+
+		b.addEventListener('click',jQueryData);
+		c.addEventListener('click',jQueryAttr);
+		d.addEventListener('click',function(){affirm.ui.refresh()});
+
+		function jQueryData() {
+			$('.affirm-as-low-as').data('amount','50000');
+			refreshConsole();
+		}
+
+		function jQueryAttr() {
+			$('.affirm-as-low-as').attr('data-amount','60000');
+			refreshConsole();
+		}
+
+		function refreshConsole() {
+			var _a = $('.affirm-as-low-as').data('amount');
+			var _b = $('.affirm-as-low-as').attr('data-amount');
+			var _c = 'jQuery data: ' + _a + '\
+			jQuery attr: ' + _b;
+			$('#console').text(_c);
+		}
+
+		affirm.ui.ready(function(){
+			d.classList.add('active');
+		});
+
+	</script>
+</body>
+</html>
